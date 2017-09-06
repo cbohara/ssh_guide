@@ -1,6 +1,7 @@
 SSH = secure shell
     software-based approach to network security
-    SSH creates a channel for running a shell on a remote computer with end-to-end encryption between 2 systems
+    SSH creates a channel for running a shell on a remote computer
+    end-to-end encryption between 2 systems
     when data is sent by a computer to the network 
         SSH automatically encrypts (scrambles) it
     when data reaches the intended recipient 
@@ -25,7 +26,7 @@ SSH is a protocol
 
 SSH keys
     small blob of bits that uniquely ID SSH user
-    using key with authentication agent program allows SSH to authenticate you securely without having to type passwords
+    authentication agent program = authenticate you securely without having to type passwords
 
     put special, non-secure public key files into remote computer accounts
     on local machine invoke ssh-agent program (runs in the background)
@@ -45,7 +46,7 @@ ssh-agent
     program that keeps private keys in memory and provides auth services to SSH clients
     preload agent with private keys at the beginning of login session
     allows remote servers to have access to local ssh-agent
-    agent forwarding allows you to ssh from one machine to another and the agent connection follows along the way
+    agent forwarding  = ssh from one machine to another and agent connection follows along the way
 
 port forwarding/tunneling
     reroutes TPC/IP connection to pass through SSH connection
