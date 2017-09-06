@@ -32,6 +32,21 @@ SSH keys
     choose the key you will need for login
     load the key into the agent using ssh-add program
 
+    private key
+        closely guarded secret 
+        only I have it
+        SSH client uses it to prove ID to servers
+
+    public key
+        place into remote machines
+        during connection the SSH client and server check if public and private key match
+
+ssh-agent
+    program that keeps private keys in memory and provides auth services to SSH clients
+    preload agent with private keys at the beginning of login session
+    allows remote servers to have access to local ssh-agent
+    agent forwarding allows you to ssh from one machine to another and the agent connection follows along the way
+
 port forwarding/tunneling
     reroutes TPC/IP connection to pass through SSH connection
     ex: out of the office but want to access the internal server in the office
@@ -47,4 +62,16 @@ file transfer with scp
     transfers file on remote shell.ips.com machine called printme.pdf to local machine
     filename from source machine doesn’t have to match destination machine
     known hosts 
+
+sftp
+    uses SSH protected channel for data transfer
+    multiple commands for copying files can be invoked within a single session
+
+known hosts
+    the first time you log into a new remote machine it may report its never seen the machine before
+    protects against man-in-the-middle attacks
+    each SSH server has a secret unique ID = host key = IDs itself to the client
+    the first time you connect to the remote host a public counterpart of the host key gets copied + stored to local machine
+    each time you connect to remote machine SSH client checks the remote host ID using the public key
+
 
