@@ -74,4 +74,32 @@ known hosts
     the first time you connect to the remote host a public counterpart of the host key gets copied + stored to local machine
     each time you connect to remote machine SSH client checks the remote host ID using the public key
 
+config file
+    client config file is divided into sections
+    each section contains settings for 1 remote host or set of related remote hosts
+
+    Host
+        Host begins a new section followed by host specification
+        can be hostname
+            Host server.example.com
+        can be IP address
+            Host 123.61.4.10
+        can be nickname
+            Host aws
+        or wildcard pattern
+            Host *
+    
+    multiple matches
+        if you want some settings applied to all remote hosts create Host *
+        if it is first section in the file its settings take precedence over any others 
+        if it is the last section then its configuration is the default if not specified in an earlier section
+        
+    
+    
+
+
+
+
+
+
 
