@@ -91,15 +91,5 @@ config file
     
     multiple matches
         if you want some settings applied to all remote hosts create Host *
-        if it is first section in the file its settings take precedence over any others 
-        if it is the last section then its configuration is the default if not specified in an earlier section
-        
-    
-    
-
-
-
-
-
-
-
+        first section in the file = settings take precedence over any others 
+        last section = default configuration if not specified in an earlier section
