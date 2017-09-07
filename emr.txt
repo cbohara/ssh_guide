@@ -1,0 +1,60 @@
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-web-interfaces.html
+Hadoop publishes user interfaces as web sites hosted on the master node and slave nodes
+only available on node's local web server 
+not publically available over the internet 
+
+YARN ResourceManager
+http://master-public-dns-name:8088/
+
+Spark HistoryServer
+http://master-public-dns-name:18080/
+
+
+option 1
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-ssh-tunnel-local.html
+use an SSH client to connect with the master node
+configure SSH tunneling with local port forwarding
+use internet browser to open web interfaces hosted on the master node
+
+to connect with the local web server on the master node
+create SSH tunnel between your computer and the master node = port forwarding
+to get the response of the web server running on the master node
+
+replace ec2-###-##-##-###.compute-1.amazonaws.com with master node DNS name
+
+ssh -N -L 8157:ec2-###-##-##-###.compute-1.amazonaws.com:8088 hadoop@ec2-###-##-##-###.compute-1.amazonaws.com
+
+terminal remains open until you close ssh session
+view resource manager web interface on my machine's browser at http://localhost:8157
+
+
+option 2
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-ssh-tunnel.html
+use SSH client to connect with master node
+configure SSH tunneling with dynamic port forwarding
+configure internet browser using chrome extension to manage SOCKS proxy settings
+
+if you create the SSH tunnel using port forwarding 
+all traffic routed to the specified unused local port is forwarded to the local web server on the master node
+this creates a SOCKS proxy
+
+this method allows you to automatically filter URLs based on text patterns
+and limit proxy settings to domains that match the form of the master node's DNS name
+
+chrome extension will automatically handle turning the proxy on and off 
+when you switch between websites on the master node and those on the internet 
+
+ssh -N -D 8157 hadoop@ec2-###-##-##-###.compute-1.amazonaws.com
+
+-D for dynamic port forwarding
+allows you to specify a local port used to forward data to all remote ports on master node's local web server
+creates a local SOCKS proxy listening to the port specified 
+
+the terminal will remain open and not return a response
+when done with using the web interfaces close the ssh session
+
+configure the SOCKS proxy for the browser 
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-proxy.html
+proxy handles turning proxy on and off 
+when you switch between websites hosted on master node and those hosted on the internet 
+specify the the urls you want to use the proxy for
