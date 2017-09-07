@@ -94,3 +94,52 @@ config file
         if you want some settings applied to all remote hosts create Host *
         first section in the file = settings take precedence over any others 
         last section = default configuration if not specified in an earlier section
+
+when in doubt use ssh -v verbose option
+
+proxy
+    proxy = intermediary that forwards requests from client to other servers
+    SSH is usually proxied for security
+        ex: allow authenticated users to SSH through firewalls
+    
+    sometimes you can only access a remote server via intermediary server (aka jump box)
+    use ProxyCommand to connect to another host via jump box as if the connection were direct using ssh
+        ~/.ssh/config
+        host jumpbox 
+            some info...
+        host remoteserver
+            # specify the command to use to connect with the remote server
+            # %h will be replaced with the HostName for the remote server
+            ProxyCommand    ssh jumpbox nc %h 22
+
+    netcat (nc) 
+        command is needed to set and establish a TCP pipe between intermediate jump box and remote server
+        used to read and write network connections directly
+
+SOCKS
+    connect with an intermediate machine using SOCKS proxy
+    SOCKS is an application-layer network proxing system supported by SSH
+    essentially SOCKS server acts as a middle man between 2 other servers and passes data between the 2 servers
+
+    SOCKS5
+        authentication
+            proxy can apply access control and user logging 
+        naming support
+            don't need to specify IP address because they often change (ex: AWS elastic IP)
+            instead specify (name, port) and SOCKS5 will resolve to the right IP
+
+    SSH uses SOCKS
+        as a normal SOCKS client
+            middle man
+        as a SOCKS server in conjunction with port forwarding
+            this allows for dynamic forwarding 
+            SOCKS clients can reach any TCP socket on the other side of an SSH connection through a single forward port
+
+    dynamic forward
+        $ ssh -D1080 server
+        or 
+        ~/.ssh/config
+        host server
+            DynamicForward 1080
+
+port forwarding
